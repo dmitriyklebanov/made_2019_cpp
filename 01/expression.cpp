@@ -81,7 +81,6 @@ char Expression::parseSign(const std::string& expr_str, size_t& pos) {
 }
 
 int Expression::evaluateOperation(const int val1, const int val2, const char operation) const {
-    //std::cout << "eval = " << val1 << " " << val2 << " " << operation << std::endl;
     switch (operation) {
         case '+':
             return val1 + val2;
@@ -99,18 +98,18 @@ int Expression::evaluateOperation(const int val1, const int val2, const char ope
 }
 
 int Expression::evaluateExpressionImpl(const size_t l, const size_t r) const {
-    //std::cout << l << " " << r << std::endl;
     if (l == r) {
         return _numbers_[l];
     }
+
     size_t m = r - 1;
-    while (m > l && isOperationWithPriority(_operations_[m], 0)) {
+    while (m > l && !isOperationWithPriority(_operations_[m], 1)) {
         m--;
     }
-    if (isOperationWithPriority(_operations_[m], 0)) {
+    if (!isOperationWithPriority(_operations_[m], 1)) {
         m = r - 1;
     }
-    //std::cout << m << std::endl;
+
     return evaluateOperation(
         evaluateExpressionImpl(l, m),
         evaluateExpressionImpl(m + 1, r),
@@ -147,8 +146,7 @@ int Expression::evaluate() const {
 
 void Expression::printDebug() const {
     for (size_t i = 0; i < _numbers_.size(); i++) {
-        std::cerr << _numbers_[i] << " | " << _operations_[i] << "/";
-        //std::cerr << _numbers_[i] << _operations_[i];
+        std::cerr << _numbers_[i] << _operations_[i];
     }
     std::cerr << std::endl;
 }

@@ -16,7 +16,6 @@ int run(std::string&& expr_str) {
         throw;
     }
 
-    //expr.printDebug();
     int res = 0;
     try {
         res = expr.evaluate();
