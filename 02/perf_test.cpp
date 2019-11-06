@@ -34,13 +34,14 @@ bool runPerfTest(const size_t max_size, const size_t allocate_size, const size_t
 }
 
 int perfTest() {
-    int total = 4;
+    int total = 5;
     int success = 0;
 
     success += runPerfTest(1000, 50, 100000);
     success += runPerfTest(2000, 100, 100000);
     success += runPerfTest(100000, 10000, 100000);
     success += runPerfTest(1000000, 100000, 1000000);
+    success += runPerfTest(10000000, 10000000, 1000000);
 
     std::cout << "total: " << total << "\n";
     std::cout << "success: " << success << "\n";

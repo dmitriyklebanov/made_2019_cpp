@@ -23,11 +23,7 @@ void* Allocator::allocate(const size_t size) {
 }
 
 void Allocator::reset() {
-    if (buffer_ != nullptr) {
-        free(buffer_);
-        buffer_ = static_cast<char*>(std::malloc(max_size_));
-        offset_ = 0;
-    }
+    offset_ = 0;
 }
 
 bool Allocator::setMaxSize(const size_t size) {
