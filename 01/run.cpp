@@ -4,28 +4,20 @@
 #include <string>
 #include <stdexcept>
 
-int run(std::string&& expr_str) {
+int run(const std::string& expr_str) {
     Expression expr;
+    int res = 0;
     try {
-        expr.parseFromString(std::move(expr_str));
+        expr.parseFromString(expr_str);
+        res = expr.evaluate();
     } catch (const std::exception& ex) {
-        std::cout << "Error when parsing expression from string: " << ex.what() << std::endl;
+        std::cout << ex.what() << std::endl;
         return 1;
     } catch (...) {
         std::cout << "Unhandled exception" << std::endl;
         throw;
     }
 
-    int res = 0;
-    try {
-        res = expr.evaluate();
-    } catch (const std::exception& ex) {
-        std::cout << "Error when evaluating expression: " << ex.what() << std::endl;
-        return 2;
-    } catch (...) {
-        std::cout << "Unhandled exception" << std::endl;
-        throw;
-    }
     std::cout << "Result: " << res << std::endl;
     return 0;
 }

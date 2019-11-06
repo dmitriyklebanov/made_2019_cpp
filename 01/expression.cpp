@@ -39,7 +39,7 @@ bool Expression::containsInOperations(const char c) {
 
 int Expression::parseNumber(const std::string& expr_str, size_t& pos) {
     if (pos == expr_str.size()) {
-        throw std::out_of_range("end of expression string");
+        throw std::out_of_range("parser error: end of expression string");
     }
 
     int number = 0;
@@ -59,9 +59,9 @@ int Expression::parseNumber(const std::string& expr_str, size_t& pos) {
 
     if (number_length == 0) {
         if (pos == expr_str.size()) {
-            throw std::length_error("length of number length in string representation can\'t be 0");
+            throw std::length_error("parser error: length of number length in string representation can\'t be 0");
         } else {
-            throw std::runtime_error("bad character");
+            throw std::runtime_error("parser error: bad character");
         }
     }
 
@@ -70,11 +70,11 @@ int Expression::parseNumber(const std::string& expr_str, size_t& pos) {
 
 char Expression::parseSign(const std::string& expr_str, size_t& pos) {
     if (pos == expr_str.size()) {
-        throw std::out_of_range("end of expression string");
+        throw std::out_of_range("parser error: end of expression string");
     }
 
     if (!containsInOperations(expr_str[pos])) {
-        throw std::runtime_error("bad character");
+        throw std::runtime_error("parser error: bad character");
     }
 
     return expr_str[pos++];
@@ -90,7 +90,7 @@ int Expression::evaluateOperation(const int val1, const int val2, const char ope
             return val1 * val2;
         case '/':
             if (val2 == 0) {
-                throw std::runtime_error("division by zero");
+                throw std::runtime_error("evaluation error: division by zero");
             }
             return val1 / val2;
     }
@@ -133,7 +133,7 @@ void Expression::parseFromString(std::string expr_str) {
         _operations_.push_back(cur_operation);
     }
     if (_operations_.back() != END_OF_EXPRESSION) {
-        throw std::runtime_error("invalid end of expression");
+        throw std::runtime_error("parser error: invalid end of expression");
     }
 }
 
