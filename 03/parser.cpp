@@ -22,63 +22,31 @@ bool Parser::toInt(const std::string& str, int& value) {
     return i == str.size();
 }
 
-Parser::Parser(const std::string& str)
-    : to_parse_(str)
-{
-}
-
-Parser::Parser(std::string&& str)
-    : to_parse_(std::move(str))
-{
-}
-
-void Parser::setParseString(const std::string& str) {
-    to_parse_ = str;
-}
-
-void Parser::setParseString(std::string&& str) {
-    to_parse_ = std::move(str);
-}
-
-const std::string& Parser::getParseString() const {
-    return to_parse_;
-}
-
 Parser& Parser::registerOnStart(Callback func) {
-    on_start_.emplace_back(func);
+    on_start_.emplace_back(std::move(func));
     return *this;
 }
 
 Parser& Parser::registerOnFinish(Callback func) {
-    on_finish_.emplace_back(func);
+    on_finish_.emplace_back(std::move(func));
     return *this;
 }
 
 Parser& Parser::registerOnToken(StringTokenCallback func) {
-    on_string_token_.emplace_back(func);
+    on_string_token_.emplace_back(std::move(func));
     return *this;
 }
 
 Parser& Parser::registerOnToken(IntTokenCallback func) {
-    on_int_token_.emplace_back(func);
+    on_int_token_.emplace_back(std::move(func));
     return *this;
 }
 
-void Parser::parse(const std::string& str) {
-    setParseString(str);
-    parse();
-}
-
-void Parser::parse(std::string&& str) {
-    setParseString(std::move(str));
-    parse();
-}
-
-void Parser::parse() {
+void Parser::parse(std::string to_parse) {
     onCallback(on_start_);
 
     std::stringstream stream;
-    stream << to_parse_;
+    stream << std::move(to_parse);
 
     std::string stringToken;
     while (stream >> stringToken) {
