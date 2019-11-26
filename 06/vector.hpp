@@ -44,7 +44,14 @@ public :
 
 template <class T>
 T* Vector<T>::allocate(const size_t size) {
-    return size ? static_cast<T*>(malloc(sizeof(T) * size)) : nullptr;
+    if (!size) {
+        return nullptr;
+    }
+    T* res = static_cast<T*>(malloc(sizeof(T) * size));
+    if (!res) {
+        throw std::runtime_error("Vector<T>::allocate(): can\'t allocate memory");
+    }
+    return res;
 }
 
 template <class T>
@@ -104,6 +111,9 @@ Vector<T>::~Vector() {
 
 template <class T>
 Vector<T>& Vector<T>::operator =(const Vector& obj) {
+    if (this == &obj) {
+        return *this;
+    }
     T* new_buffer = allocate(obj.size_);
     std::copy(obj.buffer_, obj.buffer_ + obj.size_, new_buffer);
 

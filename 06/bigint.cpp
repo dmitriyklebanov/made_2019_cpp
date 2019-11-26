@@ -45,16 +45,6 @@ BigInt::BigInt(long long number)
     sign_ = number < 0;
 }
 
-BigInt::BigInt(unsigned int number)
-    : BigInt(static_cast<unsigned long long>(number))
-{
-}
-
-BigInt::BigInt(int number)
-    : BigInt(static_cast<long long>(number))
-{
-}
-
 BigInt& BigInt::operator +=(const BigInt& obj) {
     if (sign_ != obj.sign_) {
         sign_ ^= 1;

@@ -19,9 +19,6 @@ public :
     BigInt(unsigned long long number);
     BigInt(long long number);
 
-    BigInt(unsigned int number);
-    BigInt(int number);
-
     BigInt& operator +=(const BigInt& obj);
     BigInt& operator -=(const BigInt& obj);
 
