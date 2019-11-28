@@ -90,7 +90,9 @@ Vector<T>::Vector(const Vector& obj)
     , buffer_(allocate(obj.size_))
     , size_(obj.size_)
 {
-    std::copy(obj.buffer_, obj.buffer_ + size_, buffer_);
+    if (obj.buffer_) {
+        std::copy(obj.buffer_, obj.buffer_ + size_, buffer_);
+    }
 }
 
 template <class T>
@@ -115,7 +117,9 @@ Vector<T>& Vector<T>::operator =(const Vector& obj) {
         return *this;
     }
     T* new_buffer = allocate(obj.size_);
-    std::copy(obj.buffer_, obj.buffer_ + obj.size_, new_buffer);
+    if (obj.buffer_) {
+        std::copy(obj.buffer_, obj.buffer_ + obj.size_, new_buffer);
+    }
 
     destroy();
     buffer_size_ = obj.size_;
