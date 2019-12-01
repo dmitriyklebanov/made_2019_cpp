@@ -14,7 +14,7 @@ bigint_test_compile: bigint_test.o bigint.o
 bigint_test.o: bigint.h tester.hpp bigint_test.cpp
 	$(CC) $(CFLAGS) bigint_test.cpp
 
-bigint.o: bigint.h bigint.cpp vector.hpp
+bigint.o: bigint.h bigint.cpp utils/vector.hpp
 	$(CC) $(CFLAGS) bigint.cpp
 	
 clean:
