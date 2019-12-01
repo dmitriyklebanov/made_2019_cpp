@@ -24,9 +24,6 @@ public :
     Vector& operator =(const Vector& obj);
     Vector& operator =(Vector&& obj);
 
-    Vector(const size_t size);
-
-    void resize(const size_t new_size);
     void resize(const size_t new_size, const T& value);
     void reserve(const size_t size);
 
@@ -74,14 +71,6 @@ void Vector<T>::resize_buffer(const size_t new_buffer_size) {
     buffer_size_ = new_buffer_size;
     buffer_ = new_buffer;
     size_ = cur_size;
-}
-
-template <class T>
-Vector<T>::Vector(const size_t size)
-    : buffer_size_(size)
-    , buffer_(allocate(size))
-    , size_(size)
-{
 }
 
 template <class T>
@@ -138,15 +127,6 @@ Vector<T>& Vector<T>::operator =(Vector&& obj) {
     obj.buffer_ = nullptr;
     obj.size_ = 0;
     return *this;
-}
-
-template <class T>
-void Vector<T>::resize(const size_t new_size) {
-    if (new_size > buffer_size_) {
-        resize_buffer(new_size);
-    }
-
-    size_ = new_size;
 }
 
 template <class T>
