@@ -6,4 +6,5 @@
 * [05: Serializer](https://github.com/dmitriyklebanov/made_2019_cpp/tree/master/05)
 * [06: BigInt](https://github.com/dmitriyklebanov/made_2019_cpp/tree/master/06)
 * [07: format](https://github.com/dmitriyklebanov/made_2019_cpp/tree/master/07)
+* [08: Vector](https://github.com/dmitriyklebanov/made_2019_cpp/tree/master/08)
 
