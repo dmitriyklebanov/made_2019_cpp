@@ -155,7 +155,7 @@ template <class T, class Allocator>
 T* Vector<T, Allocator>::makeCopy(T* from, const size_type size) {
     T* res = allocate(size);
     for (size_type i = 0; i < size; ++i) {
-        new (res + i) T(from[i]);
+        allocator_.construct(res + i, from[i]);
     }
     return res;
 }
@@ -177,7 +177,7 @@ template <class T, class Allocator>
 void Vector<T, Allocator>::resize_buffer(const size_type new_buffer_size) {
     T* new_buffer = allocate(new_buffer_size);
     for (size_type i = 0; i < size_; ++i) {
-        new (new_buffer + i) T(buffer_[i]);
+        allocator_.construct(new_buffer + i, buffer_[i]);
     }
 
     size_t cur_size = size_;
@@ -202,7 +202,7 @@ Vector<T, Allocator>::Vector(size_type count, const Allocator& allocator)
     , allocator_(allocator)
 {
     for (size_type i = 0; i < size_; ++i) {
-        new (buffer_ + i) T();
+        allocator_.construct(buffer_ + i);
     }
 }
 
@@ -214,7 +214,7 @@ Vector<T, Allocator>::Vector(size_type count, const T& value, const Allocator& a
     , allocator_(allocator)
 {
     for (size_type i = 0; i < size_; ++i) {
-        new (buffer_ + i) T(value);
+        allocator_.construct(buffer_ + i, value);
     }
 }
 
@@ -282,7 +282,7 @@ void Vector<T, Allocator>::resize(const size_type count) {
 
     if (size_ < count) {
         for (size_type i = size_; i < count; ++i) {
-            new (buffer_ + i) T();
+            allocator_.construct(buffer_ + i);
         }
     } else {
         for (size_type i = count; i < size_; ++i) {
@@ -300,7 +300,7 @@ void Vector<T, Allocator>::resize(const size_type count, const T& value) {
 
     if (size_ < count) {
         for (size_type i = size_; i < count; ++i) {
-            new (buffer_ + i) T(value);
+            allocator_.construct(buffer_ + i, value);
         }
     } else {
         for (size_type i = count; i < size_; ++i) {
@@ -346,7 +346,7 @@ void Vector<T, Allocator>::push_back(const T& value) {
         resize_buffer(buffer_size_ ? buffer_size_ * 2 : 1);
     }
 
-    new (buffer_ + size_) T(value);
+    allocator_.construct(buffer_ + size_, value);
     size_++;
 }
 
@@ -356,7 +356,7 @@ void Vector<T, Allocator>::push_back(T&& value) {
         resize_buffer(buffer_size_ ? buffer_size_ * 2 : 1);
     }
 
-    new (buffer_ + size_) T(std::move(value));
+    allocator_.construct(buffer_ + size_, std::move(value));
     size_++;
 }
 
