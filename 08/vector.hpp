@@ -154,8 +154,8 @@ T* Vector<T, Allocator>::allocate(const size_type size) {
 template <class T, class Allocator>
 T* Vector<T, Allocator>::makeCopy(T* from, const size_type size) {
     T* res = allocate(size);
-    for (size_type i = 0; i < size_; ++i) {
-        new (buffer_ + i) T(from[i]);
+    for (size_type i = 0; i < size; ++i) {
+        new (res + i) T(from[i]);
     }
     return res;
 }
@@ -260,6 +260,9 @@ Vector<T, Allocator>& Vector<T, Allocator>::operator =(const Vector& obj) {
 
 template <class T, class Allocator>
 Vector<T, Allocator>& Vector<T, Allocator>::operator =(Vector&& obj) {
+    if (this == &obj) {
+        return *this;
+    }
     buffer_size_ = obj.buffer_size_;
     buffer_ = obj.buffer_;
     size_ = obj.size_;
