@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 #include "tester.hpp"
-#include "thread_pool.hpp"
+#include "thread_pool.h"
 
 uint64_t f(uint64_t n) {
     n *= 100000000LL;
@@ -34,6 +34,7 @@ bool startStopTest() {
         ThreadPool tp(10);
         tp.start();
         tp.start();
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
         tp.stop();
         tp.stop();
     }
