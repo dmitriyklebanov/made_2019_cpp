@@ -1,5 +1,8 @@
 #include "thread_pool.h"
 
+#include <atomic>
+#include <stdexcept>
+
 void ThreadPool::work() {
     while (true) {
         std::unique_lock<std::mutex> lock(worker_cv_mtx_);
@@ -43,6 +46,7 @@ void ThreadPool::start() {
         for (auto& worker : pool_) {
             worker = std::thread(&ThreadPool::work, this);
         }
+        atomic_thread_fence(std::memory_order_release);
         state_ = State::Started;
     }
 }
@@ -61,6 +65,7 @@ void ThreadPool::stop() {
         for (auto& worker : pool_) {
             worker.join();
         }
+        atomic_thread_fence(std::memory_order_release);
         state_ = State::Stopped;
     }
 }
