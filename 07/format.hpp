@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <utility>
 
 template <class T>
 std::string toString(const T& val) {
@@ -47,7 +48,8 @@ std::string format(const std::string& format_str) {
     if (format_str.find("{") != std::string::npos ||
         format_str.find("}") != std::string::npos)
     {
-        throw std::runtime_error("format(): error in format string: found unexpected control sign(s) {}");
+        throw std::runtime_error("format(): error in format string:"
+                                 "found unexpected control sign(s) {}");
     }
     return format_str;
 }
@@ -71,7 +73,8 @@ std::string format(const std::string& format_str, Args&&... args) {
             ans += strArgs[id];
             i = r + 1;
         } else {
-            throw std::runtime_error("format(): error in format string: not found control sign }");
+            throw std::runtime_error("format(): error in format string:"
+                                     "not found control sign }");
         }
     }
     ans += format_str.substr(i, format_str.size() - i);

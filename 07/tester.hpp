@@ -1,15 +1,17 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <vector>
+#include <utility>
 
 class Tester {
-private:
+ private:
     int _total_ = 0;
     int _success_ = 0;
     std::vector<size_t> _failed_ids_;
 
-public:
+ public:
     template<typename... Args>
     void execute(const std::string& res, bool is_exc, Args&&... args);
 
@@ -34,7 +36,6 @@ void Tester::execute(const std::string& res, bool is_exc, Args&&... args) {
     } else {
         _success_++;
     }
-
 }
 
 void Tester::printStatistics() const {
