@@ -1,9 +1,10 @@
+#include <iostream>
+#include <sstream>
+
 #include "deserializer.h"
 #include "serializer.h"
 #include "testlib.hpp"
 
-#include <iostream>
-#include <sstream>
 
 int combinedTest() {
     std::stringstream stream;

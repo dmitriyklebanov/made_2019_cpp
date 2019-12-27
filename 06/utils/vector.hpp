@@ -2,13 +2,14 @@
 
 #include <memory>
 #include <stdexcept>
+#include <utility>
 
 template <class T, class Allocator = std::allocator<T>>
 class Vector {
-private :
+ private :
     template <class Pointer, class Reference>
     class IteratorBase;
-public :
+ public :
     using value_type = T;
     using allocator_type = Allocator;
     using size_type = std::size_t;
@@ -22,23 +23,23 @@ public :
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-private :
+ private :
     size_type buffer_size_ = 0;
     T* buffer_ = nullptr;
     size_type size_ = 0;
 
     Allocator allocator_ = Allocator();
 
-private :
+ private :
     T* allocate(const size_type size);
     T* makeCopy(T* from, const size_type size);
 
     void destroy();
     void resize_buffer(const size_type new_size);
 
-public :
+ public :
     Vector() = default;
-    Vector(const Allocator& allocator);
+    explicit Vector(const Allocator& allocator);
 
     Vector(size_type count, const Allocator& allocator = Allocator());
     Vector(size_type count, const T& value, const Allocator& allocator = Allocator());
@@ -95,12 +96,12 @@ class Vector<T, Allocator>::IteratorBase : public std::iterator<
     Pointer,
     Reference>
 {
-private :
+ private :
     pointer ptr_;
 
-public :
-    IteratorBase(pointer ptr_)
-        : ptr_(ptr_)
+ public :
+    explicit IteratorBase(pointer ptr)
+        : ptr_(ptr)
     {
     }
 
@@ -383,7 +384,9 @@ typename Vector<T, Allocator>::reference Vector<T, Allocator>::operator[](const 
 }
 
 template <class T, class Allocator>
-typename Vector<T, Allocator>::const_reference Vector<T, Allocator>::operator[](const size_t index) const {
+typename Vector<T, Allocator>::const_reference Vector<T, Allocator>::operator[](
+    const size_t index) const
+{
     return buffer_[index];
 }
 

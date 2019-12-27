@@ -6,10 +6,10 @@
 #include "tester.hpp"
 
 int bigIntTest() {
-    using BigIntTestFunc = std::function<bool(const long long, const long long)>;
+    using BigIntTestFunc = std::function<bool(const int64_t, const int64_t)>;
     BigIntTestFunc bigint_Test_func = [](
-        const long long x,
-        const long long y)
+        const int64_t x,
+        const int64_t y)
         {
             BigInt a = x;
             BigInt b = y;

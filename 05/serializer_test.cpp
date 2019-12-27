@@ -1,13 +1,14 @@
-#include "serializer.h"
-#include "tester.hpp"
-#include "testlib.hpp"
-
 #include <functional>
 #include <sstream>
 #include <string>
 
+#include "serializer.h"
+#include "tester.hpp"
+#include "testlib.hpp"
+
 int serializerTest() {
-    using SerialiserTestFunc = std::function<bool(const std::string&, const Struct2&, const bool)>;
+    using SerialiserTestFunc = std::function<bool(const std::string&,
+        const Struct2&, const bool)>;
     SerialiserTestFunc serializer_test_func = [](
         const std::string& ans,
         const Struct2& to_serialize,

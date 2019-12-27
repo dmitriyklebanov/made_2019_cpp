@@ -1,10 +1,10 @@
-#include "deserializer.h"
-#include "tester.hpp"
-#include "testlib.hpp"
-
 #include <functional>
 #include <sstream>
 #include <string>
+
+#include "deserializer.h"
+#include "tester.hpp"
+#include "testlib.hpp"
 
 int deserializerTest() {
     using DeserialiserTestFunc = std::function<bool(std::istream&, const Struct2&, const bool)>;

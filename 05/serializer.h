@@ -1,15 +1,16 @@
 #pragma once
 
+#include <ostream>
+#include <utility>
+
 #include "errors.hpp"
 
-#include <ostream>
-
 class Serializer {
-private :
+ private :
     static constexpr char Separator_ = ' ';
 
     std::ostream& out_;
-public :
+ public :
     explicit Serializer(std::ostream& out);
 
     template <class T>
@@ -18,7 +19,7 @@ public :
     template <typename... Args>
     Error operator()(Args&&... args);
 
-private:
+ private:
     template <class T>
     Error serialize(const T& obj);
 

@@ -1,6 +1,9 @@
 #include "bigint.h"
 
-#include <cstdlib> // long long abs(long long n)
+#include <algorithm>
+#include <cstdlib>  // long long abs(long long n)
+#include <string>
+#include <utility>
 
 int BigInt::cmp(const BigInt& lhs, const BigInt& rhs) {
     if (lhs.sign_ > rhs.sign_) {
@@ -32,15 +35,15 @@ int BigInt::cmp(const BigInt& lhs, const BigInt& rhs) {
     return 0;
 }
 
-BigInt::BigInt(unsigned long long number) {
+BigInt::BigInt(uint64_t number) {
     while (number) {
         elements_.push_back(number % 10);
         number /= 10;
     }
 }
 
-BigInt::BigInt(long long number)
-    : BigInt(static_cast<unsigned long long>(std::abs(number)))
+BigInt::BigInt(int64_t number)
+    : BigInt(static_cast<uint64_t>(std::abs(number)))
 {
     sign_ = number < 0;
 }
@@ -185,7 +188,7 @@ std::istream& operator >>(std::istream& is, BigInt& obj) {
     obj.elements_.reserve(s.size());
     for (int i = s.size() - 1; i >= static_cast<int>(obj.sign_); --i) {
         if ('0' <= s[i] && s[i] <= '9') {
-            obj.elements_.push_back((int)s[i] - '0');
+            obj.elements_.push_back(s[i] - '0');
         } else {
             throw std::runtime_error("parser error: bad character");
         }

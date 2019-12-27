@@ -1,15 +1,17 @@
 #pragma once
 
+#include <istream>
+#include <string>
+#include <utility>
+
 #include "errors.hpp"
 
-#include <istream>
-
 class Deserializer {
-private :
+ private :
     static constexpr char Separator_ = ' ';
 
     std::istream& in_;
-public :
+ public :
     explicit Deserializer(std::istream& in);
 
     template <class T>
@@ -18,7 +20,7 @@ public :
     template <typename... Args>
     Error operator()(Args&&... args);
 
-private:
+ private:
     template <class T>
     Error deserialize(T& obj);
 

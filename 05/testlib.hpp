@@ -1,6 +1,8 @@
-#include "errors.hpp"
+#pragma once
 
 #include <cstdint>
+
+#include "errors.hpp"
 
 struct Struct1 {
     uint64_t ui1 = 0;

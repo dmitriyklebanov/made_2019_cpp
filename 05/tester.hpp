@@ -2,17 +2,18 @@
 
 #include <iostream>
 #include <vector>
+#include <utility>
 
 template<typename TFunc>
 class Tester {
-private:
+ private:
     int _total_ = 0;
     int _success_ = 0;
     std::vector<size_t> _failed_ids_;
 
     TFunc _test_function_;
-public:
-    Tester(TFunc func);
+ public:
+    explicit Tester(TFunc func);
 
     template<typename... Args>
     void execute(Args&&... args);

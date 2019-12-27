@@ -1,23 +1,23 @@
 #pragma once
 
-#include "utils/vector.hpp"
-
 #include <iostream>
 
+#include "utils/vector.hpp"
+
 class BigInt {
-private :
+ private :
     using ElementType = char;
     Vector<ElementType> elements_;
     bool sign_ = false;
 
-private :
+ private :
     static int cmp(const BigInt& lhs, const BigInt& rhs);
 
-public :
+ public :
     BigInt() = default;
 
-    BigInt(unsigned long long number);
-    BigInt(long long number);
+    BigInt(uint64_t number);
+    BigInt(int64_t number);
 
     BigInt& operator +=(const BigInt& obj);
     BigInt& operator -=(const BigInt& obj);
