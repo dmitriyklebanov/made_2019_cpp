@@ -3,14 +3,14 @@
 #include <cstdlib>
 
 class Allocator {
-private :
+ private :
     char* buffer_ = nullptr;
     size_t max_size_ = 0;
     size_t offset_ = 0;
 
-public :
+ public :
     Allocator() = default;
-    Allocator(const size_t size);
+    explicit Allocator(const size_t size);
     ~Allocator();
 
     void* allocate(const size_t size);

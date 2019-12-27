@@ -1,7 +1,9 @@
 #include "allocator.h"
 #include "timer.h"
 
-uint32_t customAllocatorPerfTest(const size_t max_size, const size_t allocate_size, const size_t number_of_iterations) {
+uint32_t customAllocatorPerfTest(const size_t max_size,
+    const size_t allocate_size, const size_t number_of_iterations)
+{
     Timer timer;
     Allocator my_alloc(max_size);
     for (size_t i = 0; i < number_of_iterations; i++) {
@@ -25,8 +27,11 @@ uint32_t mallocPerfTest(const size_t allocate_size, const size_t number_of_itera
     return timer.get().count();
 }
 
-bool runPerfTest(const size_t max_size, const size_t allocate_size, const size_t number_of_iterations) {
-    uint32_t custom_allocator_res = customAllocatorPerfTest(max_size, allocate_size, number_of_iterations);
+bool runPerfTest(const size_t max_size, const size_t allocate_size,
+    const size_t number_of_iterations)
+{
+    uint32_t custom_allocator_res = customAllocatorPerfTest(max_size,
+        allocate_size, number_of_iterations);
     uint32_t malloc_res = mallocPerfTest(allocate_size, number_of_iterations);
     std::cout << "allocator time: " << custom_allocator_res << " us \n";
     std::cout << "malloc time: " << malloc_res << " us \n";

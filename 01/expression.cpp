@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <utility>
 
 const char Expression::END_OF_EXPRESSION = '\n';
 const std::vector<std::string> Expression::OPERATIONS = {"*/", "+-"};
@@ -59,7 +60,8 @@ int Expression::parseNumber(const std::string& expr_str, size_t& pos) {
 
     if (number_length == 0) {
         if (pos == expr_str.size()) {
-            throw std::length_error("parser error: length of number length in string representation can\'t be 0");
+            throw std::length_error("parser error: length of number"
+                       "length in string representation can\'t be 0");
         } else {
             throw std::runtime_error("parser error: bad character");
         }
@@ -113,8 +115,7 @@ int Expression::evaluateExpressionImpl(const size_t l, const size_t r) const {
     return evaluateOperation(
         evaluateExpressionImpl(l, m),
         evaluateExpressionImpl(m + 1, r),
-        _operations_[m]
-    );
+        _operations_[m]);
 }
 
 void Expression::parseFromString(std::string expr_str) {

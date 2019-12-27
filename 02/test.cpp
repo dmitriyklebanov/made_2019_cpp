@@ -1,11 +1,14 @@
+#include <functional>
+
 #include "allocator.h"
 #include "tester.hpp"
 
-#include <functional>
-
 int test() {
-    std::function<bool(const size_t, const size_t, const size_t, size_t)> test_func =
-        [](const size_t max_size, const size_t allocate_size, const size_t number_of_iterations, size_t number_of_resets) {
+    using TestFunc = std::function<bool(const size_t, const size_t, const size_t, size_t)>;
+    TestFunc test_func =
+        [](const size_t max_size, const size_t allocate_size,
+            const size_t number_of_iterations, size_t number_of_resets)
+        {
             number_of_resets--;
             Allocator my_alloc(max_size);
             for (size_t i = 0; i < number_of_iterations; i++) {
@@ -17,7 +20,7 @@ int test() {
             }
             return number_of_resets == 0;
         };
-    Tester<std::function<bool(const size_t, const size_t, const size_t, size_t)>> allocator_tester(test_func);
+    Tester<TestFunc> allocator_tester(test_func);
 
     allocator_tester.execute(5, 1, 3, 1);
     allocator_tester.execute(5, 2, 3, 2);

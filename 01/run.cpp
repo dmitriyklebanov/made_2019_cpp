@@ -1,8 +1,8 @@
-#include "expression.h"
-
 #include <iostream>
 #include <string>
 #include <stdexcept>
+
+#include "expression.h"
 
 int run(const std::string& expr_str) {
     Expression expr;

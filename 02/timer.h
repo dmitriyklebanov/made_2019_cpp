@@ -4,12 +4,12 @@
 #include <iostream>
 
 class Timer {
-private :
+ private :
     using clock_t = std::chrono::high_resolution_clock;
 
     const clock_t::time_point start_;
 
-public :
+ public :
     using Milliseconds = std::chrono::microseconds;
 
     Timer();

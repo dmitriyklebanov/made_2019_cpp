@@ -1,10 +1,11 @@
+#include <functional>
+
 #include "expression.h"
 #include "tester.hpp"
 
-#include <functional>
-
 int test() {
-    std::function<bool(const std::string&, const int, const bool)> test_func =
+    using TestFunc = std::function<bool(const std::string&, const int, const bool)>;
+    TestFunc test_func =
         [](const std::string& expression, const int ans, const bool thrown_exception) {
             int res = 0;
             try {
@@ -16,7 +17,7 @@ int test() {
             }
             return res == ans;
         };
-    Tester<std::function<bool(const std::string&, const int, const bool)>> expression_tester(test_func);
+    Tester<TestFunc>expression_tester(test_func);
 
     expression_tester.execute("", 0, false);
     expression_tester.execute("-1 +2-3+4 -5+6-7", -4, false);

@@ -4,15 +4,15 @@
 #include <vector>
 
 class Expression {
-private:
+ private :
     static const char END_OF_EXPRESSION;
     static const std::vector<std::string> OPERATIONS;
 
-private:
+ private :
     std::vector<int> _numbers_;
     std::vector<char> _operations_;
 
-private:
+ private :
     void removeSpaces(std::string& expr);
 
     bool isDigit(const char c);
@@ -26,7 +26,7 @@ private:
     int evaluateOperation(const int val1, const int val2, const char operation) const;
     int evaluateExpressionImpl(const size_t l, const size_t r) const;
 
-public:
+ public :
     void parseFromString(std::string expr_str);
     int evaluate() const;
 
