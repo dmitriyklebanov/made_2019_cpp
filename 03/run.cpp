@@ -1,15 +1,19 @@
-#include "parser.h"
-
 #include <iostream>
 #include <string>
 #include <stdexcept>
+
+#include "parser.h"
 
 int run(const std::string& to_parse) {
     try {
         Parser parser = Parser()
             .registerOnStart([]() { std::cout << "Start callback" << std::endl; })
-            .registerOnToken([](std::string token) { std::cout << "String token = " << std::move(token) << std::endl; })
-            .registerOnToken([](int token) { std::cout << "Int token = " << token << std::endl; })
+            .registerOnToken([](std::string token) {
+                std::cout << "String token = " << std::move(token) << std::endl;
+            })
+            .registerOnToken([](int token) {
+                std::cout << "Int token = " << token << std::endl;
+            })
             .registerOnFinish([]() { std::cout << "Finish callback" << std::endl; });
         parser.parse(to_parse);
     } catch (const std::exception& ex) {

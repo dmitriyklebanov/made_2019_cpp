@@ -1,6 +1,7 @@
 #include "parser.h"
 
 #include <sstream>
+#include <utility>
 
 bool Parser::toInt(const std::string& str, int& value) {
     int sign = 1;

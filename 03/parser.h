@@ -3,14 +3,15 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <utility>
 
 class Parser {
-public :
+ public :
     using Callback = std::function<void()>;
     using StringTokenCallback = std::function<void(std::string)>;
     using IntTokenCallback = std::function<void(int)>;
 
-private :
+ private :
     std::vector<Callback> on_start_;
     std::vector<Callback> on_finish_;
     std::vector<StringTokenCallback> on_string_token_;
@@ -23,7 +24,7 @@ private :
     void onTokenCallback(std::vector<std::function<void(Token)>>& callbacks, Token&& token);
 
     bool toInt(const std::string& str, int& value);
-public :
+ public :
     Parser& registerOnStart(Callback func);
     Parser& registerOnFinish(Callback func);
     Parser& registerOnToken(StringTokenCallback func);
@@ -40,7 +41,9 @@ void Parser::onCallback(std::vector<Func>& callbacks) {
 }
 
 template <typename Token>
-void Parser::onTokenCallback(std::vector<std::function<void(Token)>>& callbacks, Token&& token) {
+void Parser::onTokenCallback(std::vector<std::function<void(Token)>>& callbacks,
+    Token&& token)
+{
     for (auto& callback : callbacks) {
         callback(std::move(token));
     }
