@@ -31,7 +31,8 @@ ThreadPool::ThreadPool(const size_t n)
     : pool_(n)
 {
     if (n == 0) {
-        throw std::runtime_error("ThreadPool::ThreadPool(): number of threads should be more than zero.");
+        throw std::runtime_error("ThreadPool::ThreadPool():"
+                "number of threads should be more than zero.");
     }
 }
 

@@ -3,12 +3,14 @@
 #include <condition_variable>
 #include <functional>
 #include <future>
+#include <memory>
 #include <mutex>
 #include <thread>
 #include <vector>
+#include <utility>
 
 class ThreadPool {
-private :
+ private :
     enum class State {
         Starting,
         Started,
@@ -16,7 +18,7 @@ private :
         Stopped
     };
 
-private :
+ private :
     std::vector<std::thread> pool_;
     std::mutex worker_cv_mtx_;
     std::condition_variable queue_cv_;
@@ -25,10 +27,10 @@ private :
     size_t active_workers_ = 0;
     State state_ = State::Stopped;
 
-private :
+ private :
     void work();
 
-public :
+ public :
     explicit ThreadPool(const size_t n);
     ~ThreadPool();
 
@@ -48,7 +50,8 @@ auto ThreadPool::exec(TFunc func, Args... args) -> std::future<decltype(func(arg
     {
         std::lock_guard<std::mutex> lock(worker_cv_mtx_);
         auto exec_func = std::bind(std::move(func), std::move(args)...);
-        auto task_ptr = std::make_shared<std::packaged_task<decltype(func(args...))()>>(std::move(exec_func));
+        auto task_ptr = std::make_shared<std::packaged_task<decltype(func(args...))()>>(
+            std::move(exec_func));
         result = task_ptr->get_future();
 
         queue_.push_back([task_ptr]() {
