@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <stdexcept>
+#include <utility>
 
 Matrix::Row::Row(std::initializer_list<int> init)
     : row_(std::move(init))

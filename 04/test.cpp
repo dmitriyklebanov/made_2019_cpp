@@ -1,10 +1,11 @@
+#include <functional>
+
 #include "matrix.h"
 #include "tester.hpp"
 
-#include <functional>
-
 int test() {
-    using TestFunc = std::function<bool(const Matrix&, const size_t, const size_t, const int, const bool)>;
+    using TestFunc = std::function<bool(const Matrix&, const size_t,
+        const size_t, const int, const bool)>;
     TestFunc test_func = [](
         const Matrix& matrix,
         const size_t i,

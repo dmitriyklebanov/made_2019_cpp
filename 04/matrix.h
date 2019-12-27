@@ -3,12 +3,12 @@
 #include <vector>
 
 class Matrix {
-public :
+ public :
     struct Row {
-    private :
+     private :
         std::vector<int> row_;
 
-    public :
+     public :
         Row() = default;
         Row(const Row&) = default;
         Row(Row&&) = default;
@@ -29,13 +29,13 @@ public :
 
     std::vector<Row> matrix_;
 
-public :
+ public :
     Matrix() = default;
     Matrix(const Matrix&) = default;
     Matrix(Matrix&&) = default;
 
-    Matrix(const std::vector<Row>& matrix);
-    Matrix(std::vector<Row>&& matrix);
+    explicit Matrix(const std::vector<Row>& matrix);
+    explicit Matrix(std::vector<Row>&& matrix);
 
     Matrix(std::initializer_list<Row> init);
 
