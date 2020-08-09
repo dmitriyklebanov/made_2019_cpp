@@ -1,3 +1,113 @@
 # 05: Serializer
+
+### Task
+
+Write simple serializer which supports two types: uint64_t and bool.
+
+```c++
+struct Data
+{
+    uint64_t a;
+    bool b;
+    uint64_t c;
+};
+
+Data x { 1, true, 2 };
+
+std::stringstream stream;
+
+Serializer serializer(stream);
+serializer.save(x);
+
+Data y { 0, false, 0 };
+
+Deserializer deserializer(stream);
+const Error err = deserializer.load(y);
+
+assert(err == Error::NoError);
+
+assert(x.a == y.a);
+assert(x.b == y.b);
+assert(x.c == y.c);
+```
+
+Serialize to space-delmited text view, serialize bool as "true" or "false".
+
+**Implementation hints:**
+
+```c++
+struct Data
+{
+    uint64_t a;
+    bool b;
+    uint64_t c;
+
+    template <class Serializer>
+    Error serialize(Serializer& serializer)
+    {
+        return serializer(a, b, c);
+    }
+};
+```
+
+```c++
+// serializer.h
+#pragma once
+
+enum class Error
+{
+    NoError,
+    CorruptedArchive
+};
+
+class Serializer
+{
+    static constexpr char Separator = ' ';
+public:
+    explicit Serializer(std::ostream& out)
+        : out_(out)
+    {
+    }
+
+    template <class T>
+    Error save(T& object)
+    {
+        return object.serialize(*this);
+    }
+
+    template <class... ArgsT>
+    Error operator()(ArgsT... args)
+    {
+        return process(args...);
+    }
+    
+private:
+    // process использует variadic templates
+};
+```
+
+Deserializer is implemented similarly to Serializer, only accepts std::istream, not std::ostream
+
+An example of deserializing bool:
+
+```c++
+Error load(bool& value)
+{
+    std::string text;
+    in_ >> text;
+
+    if (text == "true")
+        value = true;
+    else if (text == "false")
+        value = false;
+    else
+        return Error::CorruptedArchive;
+
+    return Error::NoError;
+}
+```
+
+### Usage
+
 * ```make``` - build Serializer tests
 * ```make test``` - launch tests for Serializer
