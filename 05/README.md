@@ -110,4 +110,7 @@ Error load(bool& value)
 ### Usage
 
 * ```make``` - build Serializer tests
-* ```make test``` - launch tests for Serializer
+* ```make deserializer_test``` - launch tests for Deserializer
+* ```make serializer_test``` - launch tests for Serializer
+* ```make combinedr_test``` - launch combined tests
+* ```make test``` - launch all tests
